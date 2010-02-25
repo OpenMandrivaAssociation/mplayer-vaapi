@@ -7,13 +7,13 @@
 %define pkgext	%{nil}
 %endif
 
-%define name		mplayer%{pkgext}
-%define Name		MPlayer
+%define Name		mplayer-vaapi
+%define name		%{Name}%{pkgext}
 %define Summary		Movie player for linux
 %define prerel		rc4
 %define version 1.0
 %define fversion %svn
-%define svn r30392
+%define svn 20100224
 %if %svn
 %define rel		1.%prerel.0.%svn.1
 %else 
@@ -68,7 +68,8 @@
 %define build_directfb 1
 %define build_v4l2 1
 %define build_xvmc 1
-%define build_vdpau 1
+%define build_vaapi 1
+%define build_vdpau 0
 %define build_ivtv 0
 
 
@@ -213,7 +214,7 @@ Version:	%{version}
 Release:	%{release}
 Summary:	%{Summary}
 %if %svn
-Source0:	%{name}-%{svn}.tar.xz
+Source0:	%{name}-%{svn}-FULL.tar.bz2
 %else
 Source0:	%{Name}-%{fversion}.tar.bz2
 %endif
@@ -458,10 +459,12 @@ be illegal in some countries.
 rm -rf $RPM_BUILD_ROOT
 
 %if %svn
-%setup -q -n %name -a 4
+%setup -q -n %name-%{svn} -a 4
 %else
 %setup -q -n MPlayer-%{version}%{prerel} -a 4
 %endif
+mv Blue %{name}
+pushd %{name}
 #gw fix permissions
 find DOCS -type d|xargs chmod 755
 find DOCS -type f|xargs chmod 644
@@ -486,7 +489,16 @@ perl -pi -e 's^r\$svn_revision^%release^' version.sh
 
 mv DOCS/README README.DOCS
 
+# from mplayer-vaapi's checkout-patch-build.sh
+patch -p1 < ../patches/mplayer-vaapi.patch                      || exit 1
+patch -p1 < ../patches/mplayer-vaapi-gma500-workaround.patch    || exit 1
+patch -p1 < ../patches/mplayer-vaapi-0.29.patch                 || exit 1
+patch -p1 < ../patches/mplayer-vdpau.patch                      || exit 1
+
+popd
+
 %build
+pushd %{name}
 %if !%build_optimization
 export CFLAGS="$CFLAGS $RPM_OPT_FLAGS"
 %endif
@@ -644,6 +656,9 @@ export LDFLAGS="%{?ldflags}"
 %if ! %build_ivtv
 	--disable-ivtv \
 %endif
+%if %build_vaapi
+	--enable-vaapi \
+%endif
 %if ! %build_vdpau
 	--disable-vdpau
 %endif
@@ -660,9 +675,11 @@ fgrep %release version.h
 
 # build HTML docs
 (cd DOCS/xml && make)
+popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
+pushd %{name}
 install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%name
 install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}/%name
@@ -719,6 +736,12 @@ if [ -e %{buildroot}%{_miconsdir}/mplayer%{pkgext}.png ]; then
         	%{buildroot}%{_miconsdir}/mplayer%{pkgext}.png
 fi
 %endif
+
+popd
+
+for f in AUTHORS Changelog README Copyright README.DOCS DOCS; do
+    ln -snf %{name}/$f .
+done
 
 %if %build_debug
 export DONT_STRIP=1
