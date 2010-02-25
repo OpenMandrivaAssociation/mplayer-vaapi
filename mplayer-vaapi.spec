@@ -17,14 +17,14 @@
 %if %svn
 %define rel		1.%prerel.0.%svn.1
 %else 
-%define rel 1.%prerel.2
+%define rel 1.%prerel.3
 %endif
 %define release		%mkrel %rel
 
 %define build_plf 0
 %define build_optimization 0
 %define build_debug 0
-%define build_mencoder 1
+%define build_mencoder 0
 %define build_gui 1
 
 %define kernel_version	%(/bin/bash %{SOURCE5})
@@ -374,9 +374,7 @@ BuildRequires: yasm
 BuildRequires: libbs2b-devel
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
-Provides:	mplayer%{pkgext}1.0
-Obsoletes:	mplayer%{pkgext}1.0
-
+Conflicts:	mplayer
 
 %description
 MPlayer is a movie player for LINUX (runs on many other Unices, and
@@ -425,9 +423,8 @@ BuildRequires:	imagemagick
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
 Requires: soundwrapper
-Provides:	mplayer%{pkgext}1.0-gui
-Obsoletes:	mplayer%{pkgext}1.0-gui
 Conflicts:	mplayer-skins < 1.3-8mdk
+Conflicts:	mplayer-gui
 
 %description gui
 This package contains a GUI for %{name}.
