@@ -17,7 +17,7 @@
 %define fversion %svn
 %define svn 20100224
 %if %svn
-%define rel		1.%prerel.0.%svn.2
+%define rel		1.%prerel.0.%svn.3
 %else 
 %define rel 1.%prerel.2
 %endif
@@ -351,6 +351,9 @@ BuildRequires: libxvmc-devel
 %endif
 %if %build_vdpau
 BuildRequires: vdpau-devel
+%endif
+%if %build_vaapi
+BuildRequires: libva-devel
 %endif
 BuildRequires: bzip2-devel
 BuildRequires: libmng-devel
