@@ -238,6 +238,8 @@ Patch33:       mplayer-have-dlfcn_h.patch
 #gw fix crash: https://qa.mandriva.com/show_bug.cgi?id=55443
 Patch35: mplayer-fix-dvd-crash.patch
 Patch36: mplayer-fix-gif-check.patch
+# (blino) vaapi fixes
+Patch100: mplayer-vaapi-20100224-linkva.patch
 URL:		http://www.mplayerhq.hu
 License:	GPLv2
 Group:		Video
@@ -495,6 +497,9 @@ patch -p1 < ../patches/mplayer-vaapi.patch                      || exit 1
 patch -p1 < ../patches/mplayer-vaapi-gma500-workaround.patch    || exit 1
 patch -p1 < ../patches/mplayer-vaapi-0.29.patch                 || exit 1
 patch -p1 < ../patches/mplayer-vdpau.patch                      || exit 1
+
+# (blino) vaapi fixes
+%patch100 -p2 -b .linkva
 
 popd
 
