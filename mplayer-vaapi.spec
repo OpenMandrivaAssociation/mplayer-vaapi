@@ -24,7 +24,7 @@
 %define build_plf 0
 %define build_optimization 0
 %define build_debug 0
-%define build_mencoder 0
+%define build_mencoder 1
 %define build_gui 1
 
 %define kernel_version	%(/bin/bash %{SOURCE5})
