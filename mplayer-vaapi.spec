@@ -7,7 +7,9 @@
 %define pkgext	%{nil}
 %endif
 
-%define Name		mplayer-vaapi
+%define pkgsuffix -vaapi
+%define Name		mplayer%{pkgsuffix}
+
 %define name		%{Name}%{pkgext}
 %define Summary		Movie player for linux
 %define prerel		rc4
@@ -431,14 +433,13 @@ This package contains a GUI for %{name}.
 %endif
 
 %if %build_mencoder
-%package -n mencoder%{pkgext}
+%package -n mencoder%{pkgsuffix}%{pkgext}
 Summary: MPlayer's movie encoder
 Group:		Video
 Requires:	%{name} = %version
-Provides:	mencoder%{pkgext}1.0
-Obsoletes:	mencoder%{pkgext}1.0
+Conflicts:	mencoder
 
-%description -n mencoder%{pkgext}
+%description -n mencoder%{pkgsuffix}%{pkgext}
 MEncoder a movie encoder and is a part of the MPlayer package.
 %if !%build_plf
 Note: this version doesn't have support for encoding mp3 audio streams in the
@@ -795,7 +796,7 @@ rm -rf %{buildroot}
 %doc README.DOCS
 %doc DOCS/default.css DOCS/HTML DOCS/tech/
 %if %build_mencoder
-%files -n mencoder%{pkgext}
+%files -n mencoder%{pkgsuffix}%{pkgext}
 %defattr(-,root,root)
 %{_bindir}/mencoder%{pkgext}
 %{_bindir}/divx2svcd%{pkgext}
