@@ -17,7 +17,7 @@
 %define fversion %svn
 %define svn 20100414
 %if %svn
-%define rel		1.%prerel.0.%svn.2
+%define rel		1.%prerel.0.%svn.3
 %else 
 %define rel 1.%prerel.3
 %endif
