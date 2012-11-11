@@ -1,0 +1,13 @@
+Index: configure
+===================================================================
+--- configure	(Revision 30268)
++++ configure	(Arbeitskopie)
+@@ -5121,7 +5121,7 @@
+ #include <gif_lib.h>
+ int main(void) { return 0; }
+ EOF
+-  for _ld_gif in "-lungif" "-lgif" ; do
++  for _ld_gif in "-lgif" "-lungif" ; do
+     cc_check $_ld_gif && _gif=yes && break
+   done
+ fi

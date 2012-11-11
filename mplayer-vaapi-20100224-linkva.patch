@@ -1,0 +1,12 @@
+diff -p -up mplayer-vaapi-20100224/mplayer-vaapi/configure.linkva mplayer-vaapi-20100224/mplayer-vaapi/configure
+--- mplayer-vaapi-20100224/mplayer-vaapi/configure.linkva	2010-02-25 17:56:01.000000000 +0100
++++ mplayer-vaapi-20100224/mplayer-vaapi/configure	2010-02-26 13:23:34.000000000 +0100
+@@ -5228,7 +5228,7 @@ if test "$_vaapi" = yes ; then
+   if test "$_vaapi_old" = no ; then
+     def_vaapi_old='#define CONFIG_VAAPI_OLD 0'
+     libs_mencoder="$libs_mencoder -lva"
+-    libs_mplayer="$libs_mplayer -lva-x11"
++    libs_mplayer="$libs_mplayer -lva -lva-x11"
+   else
+     def_vaapi_old='#define CONFIG_VAAPI_OLD 1'
+     _mencoder="no"

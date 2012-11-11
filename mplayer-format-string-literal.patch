@@ -1,0 +1,49 @@
+diff -p -up mplayer/libavcodec/audioconvert.c.format~ mplayer/libavcodec/audioconvert.c
+diff -p -up mplayer/libmpcodecs/vd_ffmpeg.c.format~ mplayer/libmpcodecs/vd_ffmpeg.c
+--- mplayer/libmpcodecs/vd_ffmpeg.c.format~	2009-03-02 10:56:53.000000000 +0100
++++ mplayer/libmpcodecs/vd_ffmpeg.c	2009-03-02 10:59:33.000000000 +0100
+@@ -197,7 +197,7 @@ void mp_msp_av_log_callback(void *ptr, i
+ 
+     print_prefix= strchr(fmt, '\n') != NULL;
+     vsnprintf(buf, sizeof(buf), fmt, vl);
+-    mp_msg(type, mp_level, buf);
++    mp_msg(type, mp_level, "%s", buf);
+ }
+ 
+ static void set_format_params(struct AVCodecContext *avctx, enum PixelFormat fmt){
+diff -p -up mplayer/mplayer.c.format~ mplayer/mplayer.c
+--- mplayer/mplayer.c.format~	2009-02-25 14:11:09.000000000 +0100
++++ mplayer/mplayer.c	2009-03-02 10:58:50.000000000 +0100
+@@ -2720,7 +2720,7 @@ if(!codecs_file || !parse_codec_cfg(code
+     if(!filename && !player_idle_mode){
+       if(!use_gui){
+ 	// no file/vcd/dvd -> show HELP:
+-	mp_msg(MSGT_CPLAYER, MSGL_INFO, help_text);
++	mp_msg(MSGT_CPLAYER, MSGL_INFO, "%s", help_text);
+         exit_player_with_rc(EXIT_NONE, 0);
+       } else gui_no_filename=1;
+     }
+diff -p -up mplayer/stream/librtsp/rtsp_rtp.c.format~ mplayer/stream/librtsp/rtsp_rtp.c
+--- mplayer/stream/librtsp/rtsp_rtp.c.format~	2009-02-25 14:11:07.000000000 +0100
++++ mplayer/stream/librtsp/rtsp_rtp.c	2009-03-02 10:58:50.000000000 +0100
+@@ -218,7 +218,7 @@ parse_destination (const char *line)
+   len = strlen (parse1) - strlen (parse2)
+     - strlen (RTSP_SETUP_DESTINATION) + 1;
+   dest = (char *) malloc (len + 1);
+-  snprintf (dest, len, parse1 + strlen (RTSP_SETUP_DESTINATION));
++  snprintf (dest, len, "%s", parse1 + strlen (RTSP_SETUP_DESTINATION));
+   free (line_copy);
+ 
+   return dest;
+diff -p -up mplayer/vidix/mtrr.c.format~ mplayer/vidix/mtrr.c
+--- mplayer/vidix/mtrr.c.format~	2008-09-16 10:59:52.000000000 +0200
++++ mplayer/vidix/mtrr.c	2009-03-02 10:58:50.000000000 +0100
+@@ -57,7 +57,7 @@ int	mtrr_set_type(unsigned base,unsigned
+ 	char sout[256];
+ 	unsigned wr_len;
+ 	sprintf(sout,"base=0x%08X size=0x%08X type=%s\n",base,size,stype);
+-	wr_len = fprintf(mtrr_fd,sout);
++	wr_len = fprintf(mtrr_fd,"%s", sout);
+ 	/*printf("MTRR: %s\n",sout);*/
+ 	fclose(mtrr_fd);
+ 	return wr_len == strlen(sout) ? 0 : EPERM;

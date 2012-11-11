@@ -1,0 +1,12 @@
+diff -p -up MPlayer-1.0rc2/configure~ MPlayer-1.0rc2/configure
+--- MPlayer-1.0rc2/configure~	2008-09-05 10:41:59.000000000 +0200
++++ MPlayer-1.0rc2/configure	2008-09-05 10:52:54.000000000 +0200
+@@ -663,7 +663,7 @@ _macosx_bundle=auto
+ _sortsub=yes
+ _freetypeconfig='freetype-config'
+ _fribidi=auto
+-_fribidiconfig='fribidi-config'
++_fribidiconfig='pkg-config fribidi'
+ _enca=auto
+ _inet6=auto
+ _gethostbyname2=auto
