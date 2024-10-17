@@ -237,7 +237,7 @@ Patch35: mplayer-fix-dvd-crash.patch
 Patch36: mplayer-fix-gif-check.patch
 # (blino) vaapi fixes
 Patch100: mplayer-vaapi-20100224-linkva.patch
-URL:		http://www.mplayerhq.hu
+URL:		https://www.mplayerhq.hu
 License:	GPLv2
 Group:		Video
 %if %build_dvb && %mdkversion < 1000
